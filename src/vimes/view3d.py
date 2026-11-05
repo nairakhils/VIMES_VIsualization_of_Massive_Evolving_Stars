@@ -38,6 +38,7 @@ TYPE_NAMES = {
     "CHE": "Chem. homogeneous",
 }
 STAGES = {"Mass Transfer": "transfer", "Common Envelope": "envelope"}
+REGIMES = ("", "GB", "LBV", "OB", "RSG", "VMS", "WR")
 REMNANTS = ("NS", "BH")
 CE_RATE = 1e300
 HOLD_WINDOW = 60
@@ -280,6 +281,8 @@ def scene_columns(frames, episodes):
             columns[f"wind{k}"] = column(frames, f"x3d.Mdot({k})")
             columns[f"period{k}"] = column(frames, f"x3d.Pulsar_Spin_Period({k})")
             columns[f"field{k}"] = column(frames, f"x3d.Pulsar_Mag_Field({k})")
+            codes = column(frames, f"x3d.Dominant_Mass_Loss_Rate({k})")
+            columns[f"regime{k}"] = [REGIMES[int(code)] for code in codes]
     columns["stage"] = stages(frames, episodes, rates)
     return columns
 
