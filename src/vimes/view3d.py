@@ -141,17 +141,6 @@ def stages(frames, episodes, rates):
     return stage
 
 
-def state(endpoint):
-    return {
-        "time": endpoint["Time"],
-        "m1": endpoint["Mass(1)"],
-        "m2": endpoint["Mass(2)"],
-        "a": endpoint["SemiMajorAxis"],
-        "teff1": endpoint["Teff(1)"],
-        "teff2": endpoint["Teff(2)"],
-    }
-
-
 def span(runs):
     return (
         [min(first for first, _ in runs), max(last for _, last in runs)]
@@ -170,7 +159,7 @@ def orbit(endpoint):
     }
 
 
-def envelope_state(endpoint):
+def stars_state(endpoint):
     return {
         **orbit(endpoint),
         "r1": endpoint["Radius(1)"],
@@ -192,8 +181,8 @@ def envelope_events(episodes):
                 "donor": episode["star"],
                 "during": during,
                 "until": max(last for _, last, _ in episode["runs"]),
-                "start": envelope_state(episode["endpoints"]["pre"]),
-                "end": envelope_state(episode["endpoints"]["post"]),
+                "start": stars_state(episode["endpoints"]["pre"]),
+                "end": stars_state(episode["endpoints"]["post"]),
             }
         )
     return events
@@ -231,8 +220,8 @@ def transfer_events(episodes):
                 "donor": episode["star"],
                 "during": during,
                 "until": max(last for _, last, _ in episode["runs"]),
-                "start": state(episode["endpoints"]["pre"]),
-                "end": state(episode["endpoints"]["post"]),
+                "start": stars_state(episode["endpoints"]["pre"]),
+                "end": stars_state(episode["endpoints"]["post"]),
             }
         )
     return events

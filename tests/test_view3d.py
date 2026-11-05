@@ -171,6 +171,9 @@ class TestEvents:
                 "m1": pre["Mass(1)"],
                 "m2": pre["Mass(2)"],
                 "a": pre["SemiMajorAxis"],
+                "e": pre["Eccentricity"],
+                "r1": pre["Radius(1)"],
+                "r2": pre["Radius(2)"],
                 "teff1": pre["Teff(1)"],
                 "teff2": pre["Teff(2)"],
             }
