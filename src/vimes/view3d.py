@@ -278,6 +278,8 @@ def scene_columns(frames, episodes):
         for k in (1, 2):
             columns[f"spin{k}"] = spin_ratios(frames, k)
             columns[f"wind{k}"] = column(frames, f"x3d.Mdot({k})")
+            columns[f"period{k}"] = column(frames, f"x3d.Pulsar_Spin_Period({k})")
+            columns[f"field{k}"] = column(frames, f"x3d.Pulsar_Mag_Field({k})")
     columns["stage"] = stages(frames, episodes, rates)
     return columns
 

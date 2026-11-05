@@ -77,6 +77,10 @@ CONTINUOUS_COLUMNS = (
     "Ang_Momentum(1)",
     "Ang_Momentum(2)",
     "Ang_Momentum_Total",
+    "Pulsar_Spin_Period(1)",
+    "Pulsar_Spin_Period(2)",
+    "Pulsar_Mag_Field(1)",
+    "Pulsar_Mag_Field(2)",
 )
 CODE_COLUMNS = (
     "MT_History",
@@ -137,6 +141,10 @@ EXPECTED_UNITS = {
     "Ang_Momentum(1)": "Msol AU^2 yr^-1",
     "Ang_Momentum(2)": "Msol AU^2 yr^-1",
     "Ang_Momentum_Total": "Msol AU^2 yr^-1",
+    "Pulsar_Spin_Period(1)": "s",
+    "Pulsar_Spin_Period(2)": "s",
+    "Pulsar_Mag_Field(1)": "Gauss",
+    "Pulsar_Mag_Field(2)": "Gauss",
     "Dominant_Mass_Loss_Rate(1)": "-",
     "Dominant_Mass_Loss_Rate(2)": "-",
 }

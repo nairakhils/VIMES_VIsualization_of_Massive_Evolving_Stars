@@ -87,11 +87,16 @@ class TestColumns:
         assert set(converted.columns["kind2"]) <= set(strix.KINDS)
 
     def test_physics_columns_come_with_the_augmented_frames(self, converted):
-        optional = {"spin1", "spin2", "wind1", "wind2", "transfer"}
+        optional = {"spin1", "spin2", "wind1", "wind2", "transfer", "period1", "field2"}
         assert (optional <= set(converted.columns)) == (converted.kind == "augmented")
         if converted.kind == "augmented":
             assert all(0 <= s < 1 for s in converted.columns["spin1"])
             assert all(w >= 0 for w in converted.columns["wind2"])
+            for k in (1, 2):
+                np.testing.assert_array_equal(
+                    converted.columns[f"period{k}"],
+                    values(converted.frames, f"x3d.Pulsar_Spin_Period({k})"),
+                )
             rates = values(converted.frames, "x3d.MassTransferRateDonor")
             inside = (rates > 0) & (rates < view3d.CE_RATE)
             np.testing.assert_allclose(
