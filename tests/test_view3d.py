@@ -199,6 +199,12 @@ class TestEvents:
                     "a": values["SemiMajorAxis"],
                     "e": values["Eccentricity"],
                 }
+            progenitor = episode["endpoints"]["collapse"]
+            k = episode["star"]
+            helium = progenitor[f"Mass_He_Core({k})"]
+            carbon = progenitor[f"Mass_CO_Core({k})"]
+            assert event["hydrogen"] == max(progenitor[f"Mass({k})"] - helium, 0.0)
+            assert event["helium"] == max(helium - carbon, 0.0)
 
     def test_envelopes_follow_the_compas_common_envelopes(self, converted):
         episodes = [e for e in converted.episodes if e["kind"] == "CE" and e["runs"]]

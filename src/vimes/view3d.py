@@ -188,6 +188,13 @@ def envelope_events(episodes):
     return events
 
 
+def layers(progenitor, k):
+    mass = progenitor[f"Mass({k})"]
+    helium = progenitor[f"Mass_He_Core({k})"]
+    carbon = progenitor[f"Mass_CO_Core({k})"]
+    return {"hydrogen": max(mass - helium, 0.0), "helium": max(helium - carbon, 0.0)}
+
+
 def collapse_events(episodes):
     events = []
     for episode in episodes:
@@ -198,6 +205,7 @@ def collapse_events(episodes):
             {
                 "kind": "collapse",
                 "star": episode["star"],
+                **layers(ends["collapse"], episode["star"]),
                 "during": span(runs_of(episode, "sn_jump"))
                 or span(runs_of(episode, "sn_window")),
                 "until": max(last for _, last, _ in episode["runs"]),
