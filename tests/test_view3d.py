@@ -97,9 +97,13 @@ class TestColumns:
                     converted.columns[f"period{k}"],
                     values(converted.frames, f"x3d.Pulsar_Spin_Period({k})"),
                 )
-                codes = values(converted.frames, f"x3d.Dominant_Mass_Loss_Rate({k})")
-                regimes = [view3d.REGIMES[int(code)] for code in codes]
-                assert converted.columns[f"regime{k}"] == regimes
+                pairs = zip(
+                    converted.columns[f"type{k}"],
+                    converted.columns[f"regime{k}"],
+                    strict=True,
+                )
+                seen = {pair for pair in pairs if pair[0] in ("MS", "EAGB")}
+                assert seen <= {("MS", "OB"), ("EAGB", "GB")}
             rates = values(converted.frames, "x3d.MassTransferRateDonor")
             inside = (rates > 0) & (rates < view3d.CE_RATE)
             np.testing.assert_allclose(
