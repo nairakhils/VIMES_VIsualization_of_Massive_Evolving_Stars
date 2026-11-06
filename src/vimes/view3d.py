@@ -240,7 +240,7 @@ def spin_ratios(frames, k):
     omega = column(frames, f"x3d.Omega({k})")
     breakup = column(frames, f"x3d.Omega_Break({k})")
     ratio = np.divide(omega, breakup, out=np.zeros_like(omega), where=breakup > 0)
-    return np.where((ratio > 0) & (ratio < 1), ratio, 0.0)
+    return np.clip(ratio, 0.0, 1.0)
 
 
 def scene_columns(frames, episodes):

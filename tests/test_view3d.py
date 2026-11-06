@@ -90,7 +90,7 @@ class TestColumns:
         optional = {"spin1", "spin2", "wind1", "wind2", "transfer", "period1", "field2"}
         assert (optional <= set(converted.columns)) == (converted.kind == "augmented")
         if converted.kind == "augmented":
-            assert all(0 <= s < 1 for s in converted.columns["spin1"])
+            assert all(0 <= s <= 1 for s in converted.columns["spin1"])
             assert all(w >= 0 for w in converted.columns["wind2"])
             for k in (1, 2):
                 np.testing.assert_array_equal(
@@ -151,13 +151,13 @@ class TestVimesArtefacts:
                 post[f"Teff({k})"], rel=1e-12
             )
 
-    def test_spin_above_breakup_is_dropped(self):
+    def test_spin_above_breakup_is_held_at_breakup(self):
         frames = [
             {"x3d.Omega(1)": 2.0, "x3d.Omega_Break(1)": 1.0},
             {"x3d.Omega(1)": 0.5, "x3d.Omega_Break(1)": 1.0},
             {"x3d.Omega(1)": 0.5, "x3d.Omega_Break(1)": 0.0},
         ]
-        np.testing.assert_array_equal(view3d.spin_ratios(frames, 1), [0, 0.5, 0])
+        np.testing.assert_array_equal(view3d.spin_ratios(frames, 1), [1, 0.5, 0])
 
 
 class TestEvents:
