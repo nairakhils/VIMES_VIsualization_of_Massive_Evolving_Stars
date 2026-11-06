@@ -6,13 +6,14 @@ from types import SimpleNamespace
 
 import numpy as np
 import pytest
-import strix
 from tulips.blackbody import blackbody_color
 
-from vimes import view3d
 from vimes.augment3d import add_physics_columns
 from vimes.preprocess import preprocess_to_frames
 from vimes.temp_to_color import add_temperatures_and_rgb, temperature_to_rgb
+
+strix = pytest.importorskip("strix")
+view3d = pytest.importorskip("vimes.view3d")
 
 EXAMPLES_DIR = Path(__file__).parents[1] / "examples"
 
