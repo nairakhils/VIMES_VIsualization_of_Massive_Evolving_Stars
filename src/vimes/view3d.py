@@ -333,6 +333,7 @@ def convert(frames_path, images="default"):
     path = strix.write(
         frames_path.with_suffix(".strix"),
         scene_columns(frames, episodes),
+        units="solar",
         events=transfer_events(episodes)
         + collapse_events(episodes)
         + envelope_events(episodes),
